@@ -1,0 +1,75 @@
+﻿@model userdetails.Models.UserDetails
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>InsertUserDetails</title>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+</head>
+<body>
+    @using (Html.BeginForm("InsertUserDetails", "UserDetails", FormMethod.Post))
+    {
+        <table>
+            <tr>
+                <td>User Name:</td>
+                <td>@Html.TextBoxFor(u => u.UserName)</td>
+            </tr>
+            <tr>
+                <td>Education:</td>
+                <td>@Html.TextBoxFor(u => u.Education)</td>
+            </tr>
+            <tr>
+                <td>Location:</td>
+                <td>@Html.TextBoxFor(u => u.Location)</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td> <input type="submit" value="Register" /> </td>
+            </tr>
+        </table>
+    }
+    <h4>User Details</h4>
+    @if (Model != null)
+    {
+        if (Model.usersinfo.Count > 0)
+        {
+            <table>
+                <tr>
+                    <th>UserId</th>
+                    <th>UserName</th>
+                    <th>Education</th>
+                    <th>Location</th>
+                    <th>Действие</th>
+                </tr>
+                @foreach (var item in Model.usersinfo)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelitem => item.UserId) </td>
+                        <td>@Html.DisplayFor(modelitem => item.UserName)</td>
+                        <td>@Html.DisplayFor(modelitem => item.Education)</td>
+                        <td>@Html.DisplayFor(modelitem => item.Location)</td>
+                        <td><a href="@Url.Action("Delete","UserDetails",new {userid=item.UserId,username=item.UserName})">Удалить</a></td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <b>No Details Found.</b>
+        }
+    }
+    <script type="text/javascript">
+$(function () {
+var msg = '@ViewData["result"]';
+if (msg == '1')
+{
+alert("User Details Inserted Successfully");
+window.location.href = "@Url.Action("InsertUserDetails", "User")";
+}
+});
+    </script>
+</body>
+</html>
